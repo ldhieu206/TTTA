@@ -1,0 +1,144 @@
+{% extends "home/admin/baseAdmin.html" %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Thêm giáo viên</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Thêm giáo viên</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Thêm Giáo Viên</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+            <form onsubmit="return false">
+            {% csrf_token %}
+            <input id="csrf" style="display: none" value="{{ csrf_token }}">
+              <div class="form-group">
+                <label for="inputName">Mã Giáo Viên</label>
+                <input type="text" id="maGV" class="form-control" required placeholder="Mã Giáo Viên">
+              </div>
+              <div class="form-group">
+                <label for="inputName">Tên Giáo Viên</label>
+                <input type="text" id="tenGV" class="form-control" required placeholder="Tên Giáo Viên">
+              </div>
+              <div class="form-group">
+                <label for="inputName">Giới Tính</label>
+                <select id="gioiTinh" class="form-select" aria-label="Default select example">
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="ngaySinh">Ngày Sinh</label>
+                <input type="date" id="ngaySinh" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="inputName">Số điện thoại</label>
+                <input type="text" id="sdt" class="form-control" required placeholder="Số điện thoại">
+              </div>
+              <div class="form-group">
+                <label for="inputName">Email</label>
+                <input type="text" id="email" class="form-control" placeholder="Email" required>
+              </div>
+              <div class="form-group">
+                <label for="inputName">Lương theo ngày</label>
+                <input type="text" id="luongNgay" class="form-control" placeholder="Lương ngày" required>
+              </div>
+                <div class="form-group">
+                    <label for="inputName">Password</label>
+                    <input type="text" id="password" class="form-control" required placeholder="password">
+                </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Điểm danh</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='thongBao'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>
+          <!-- /.card -->
+        </div>
+
+      <div class="row">
+        <div class="col-12">
+            <a href="{% url 'dsGiaoVienAdmin' %}" class="btn btn-secondary">Hủy</a>
+            <button onclick="addGiaoVien()" type = "submit" class = "btn btn-primary" data-toggle="modal" data-target="#myModal">Thêm</button>
+        </div>
+      </div>
+      </form>
+    </section>
+    <!-- /.content -->
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function addGiaoVien() {
+        var payload = new FormData();
+        payload.append('_token', $('#csrf').val());
+        payload.append('maGV', $('#maGV').val());
+        payload.append('tenGV', $('#tenGV').val());
+        payload.append('ngaySinh', $('#ngaySinh').val());
+        payload.append('gioiTinh', $('#gioiTinh').val());
+        payload.append('sdt', $('#sdt').val());
+        payload.append('email', $('#email').val());
+        payload.append('password', $('#password').val());
+        payload.append('luongNgay', $('#luongNgay').val());
+        payload.append('csrfmiddlewaretoken', $('#csrf').val());
+        $.ajax({
+            url: "/addGiaoVien/",
+            type: 'POST',
+            data: payload,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if(data.success==true) {
+                    $('#thongBao').html('<div class="alert alert-success">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                    setTimeout(function(){
+                        window.location.href = "/dsGiaoVienAdmin/";
+                    }, 2000);
+                }
+                else {
+                    $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                }
+            },
+        });
+    }
+</script>
+{% endblock %}

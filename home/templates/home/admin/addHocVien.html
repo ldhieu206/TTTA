@@ -1,0 +1,165 @@
+{% extends "home/admin/baseAdmin.html" %}
+<!-- JavaScript Bundle with Popper -->
+<!-- CSS only -->
+{% block content %}
+<div class="content-wrapper">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>Thêm học viên</h1>
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Thêm học viên</li>
+        </ol>
+        </div>
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+    <div class="col-12">
+        <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Tạo Học Viên</h3>
+
+            <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            </div>
+        </div>
+        <div class = "card-body">
+        <form onsubmit="return false">
+        {% comment %} <div class="card-body col"> {% endcomment %}
+        {% csrf_token %}
+            <input id="csrf" style="display: none" value="{{ csrf_token }}">
+            <div class = "form-group">
+                <label for = "lopHoc">Mã Học Viên</label>
+                <input type = "text" class = "form-control" id = "maHV" name = "maHV" placeholder = "Nhập mã học viên" required>
+            </div>
+            <div class = "form-group">
+                <label for = "khoi">Tên Học Viên</label>
+                <input type = "text" class = "form-control" id = "name" name = "name" placeholder = "Nhập Tên Học Viên" required>
+            </div>
+            <div class = "form-group">
+                <label for = "khoi">Giới tính</label>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+            </div>
+            <div class = "form-group">
+                <label for = "ngaySinh">Ngày Sinh</label>
+                <input type = "date" class = "form-control" id = "ngaySinh" name = "ngaySinh" required>
+            </div>
+            <div class = "form-group">
+                <label for = "ngayBatDau">Số Điện Thoại</label>
+                <input type = "number" class = "form-control" id = "phone" name = "phone" required placeholder = "Nhập số điện thoại">
+            </div>
+            <div class = "form-group">
+                <label for = "ngayKetThuc">Email</label>
+                <input type = "email" class = "form-control" id = "email" name = "email" required placeholder="Email addresses...">
+            </div>
+            <div class = "form-group">
+                <label for = "ngayKetThuc">Địa Chỉ</label>
+                <input type = "text" class = "form-control" id = "diaChi" name = "diaChi" required placeholder = "Nhập địa chỉ">
+            </div>
+        </div>
+        <!-- /.card-body -->
+        </div>
+        </div>
+            <div class="row">
+                <div class="col-12">
+                <a href="{% url 'dsHocVienAdmin' %}" class="btn btn-secondary">Hủy</a>
+                <button class="btn btn-primary" onclick="addHocVien()" type="submit" >
+                <i class="fas fa-save"></i>
+                Thêm
+                </button>
+            </div>
+        </div>
+        </form>
+
+        {% comment %} <button onclick="addHocVien()" type = "submit" class = "btn btn-primary" data-toggle="modal" data-target="#myModal">Thêm</button> {% endcomment %}
+  <br>
+  <br>
+  <br>
+  <br>
+
+        <!-- /.card -->
+    </div>
+        <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm lớp học</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='thongBao'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>
+    <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function addHocVien() {
+        var payload = new FormData();
+        payload.append('maHV', $('#maHV').val());
+        payload.append('name', $('#name').val());
+        payload.append('ngaySinh', $('#ngaySinh').val());
+        payload.append('gioiTinh', $('#gioiTinh').val());
+        payload.append('phone', $('#phone').val());
+        payload.append('email', $('#email').val());
+        payload.append('diaChi', $('#diaChi').val());
+        payload.append('_token', $('#csrf').val());
+        payload.append('csrfmiddlewaretoken', $('#csrf').val());
+        var url = '/addPhuHuynh/' + $('#maHV').val() +'/';
+        $.ajax({
+            url: '/addHocVien/',
+            type: 'POST',
+            data: payload,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.success == true) {
+                    $('#thongBao').html('<div class="alert alert-success">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                    setTimeout(function () {
+                        $('#modal-them').modal('hide');
+                        window.location.href = url;
+                    }, 2000);
+                } else {
+                    $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                    setTimeout(function () {
+                        $('#modal-them').modal('hide');
+                    }, 3000);
+                }
+                
+            },
+        });
+    }
+
+
+</script>
+{% endblock %}

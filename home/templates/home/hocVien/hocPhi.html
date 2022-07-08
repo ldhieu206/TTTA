@@ -1,0 +1,287 @@
+{% extends "home/hocVien/baseHV.html" %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Thông tin học phí</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Thông tin học phí</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Thống kê học phí</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+        {% csrf_token %}
+        <input id="csrf" style="display: none" value="{{ csrf_token }}">
+            <table class="table table-striped projects">
+              <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Tên học viên</th>
+                  <th>Mã lớp học</th>
+                  <th>Học phí</th>
+                  <th>Ngày đăng ký</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for item in  hphv %}
+                <tr>
+                    <td>#</td>
+                  <td>{{ hocVien.name }}</td>
+                  <td>{{ item.lopHoc_id }}</td>
+                  <td class="hocPhi">{{ item.hocPhi }}</td>
+                  <td>{{ item.ngayDangKy|date:"d-m-Y" }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3">Tổng tiền</td>
+                    <td id="tongTien">{{ tongTien }}</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+                <div class="card-body p-0">
+        {% csrf_token %}
+
+        <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        </div>
+        <!-- /.col -->
+        <!-- /.row -->
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Thống kê đóng tiền</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+        {% csrf_token %}
+        <input id="csrf" style="display: none" value="{{ csrf_token }}">
+            <table class="table table-striped projects">
+              <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Tên học viên</th>
+                  <th>Ngày đóng</th>
+                  <th>Số tiền đóng</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for item in dongTien %}
+                <tr>
+                    <td>#</td>
+                  <td>{{ hocVien.name }}</td>
+                  <td>{{ item.ngay|date:"d-m-Y" }}</td>
+                  <td class="soTienDong" >{{ item.soTienDong}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3">Tổng tiền</td>
+                    <td id = "dong">{{ dong }}</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Tổng số tiền còn nợ</td>
+                    <td id = "no">{{ no }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+            Thanh Toán
+        </button>
+        </div>
+        <!-- /.col -->
+        <!-- /.row -->
+    </section>
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thanh toán</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form  onsubmit="return false;" >
+                        {% csrf_token %}
+                        <input id="csrf" style="display: none" value="{{ csrf_token }}">
+                        <div class="form-group">
+                            <label for="">Mã học viên</label>
+                            <input type="text" class="form-control" value={{hocVien.maHV}} name="hocVien_id" id="hocVien_id" placeholder="Nhập mã học viên" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Số tiền đóng</label>
+                            <input type="text" class="form-control" name="soTienDong"  id="soTienDong" placeholder="Nhập số tiền đóng" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ngày đóng</label>
+                            <input type="date" class="form-control" name="ngay" id="ngay" placeholder="Nhập ngày đóng">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="dongTien();">Thanh toán</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    </div>
+
+    <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Đóng học phí</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='thongBao'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>  
+
+
+        <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+    const x = document.getElementById("no");
+
+    if (x.innerHTML == ' VND') {
+        x.innerHTML = '0 VND';
+    }
+
+    $("#soTienDong").on('keyup', function (e) {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+        let a = document.getElementById("soTienDong");
+        a.value = numberWithCommas(a.value);
+    }
+});
+
+    
+
+    function dongTien(){
+      var payload = new FormData();
+        payload.append('hocVien_id', $('#hocVien_id').val());
+        payload.append('soTienDong', $('#soTienDong').val());
+        payload.append('ngay', $('#ngay').val());
+      payload.append("csrfmiddlewaretoken",$("input[name=csrfmiddlewaretoken]").val());
+      $.ajax({
+        url: "/dongTien/",
+        type: "POST",
+        data: payload,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            if(data.success == true){
+                $('#modal-them').modal('show');
+                $('#thongBao').html('<div class="alert alert-success">'+data.message+'</div>');
+                setTimeout(function(){
+                    window.location.reload();
+                }, 2000);
+            }else{
+                $('#modal-them').modal('show');
+                $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
+            }
+        }
+      });
+    }
+    document.getElementById("ngay").value = new Date().toISOString().split('T')[0];
+
+    function numberWithCommas(y) {
+        if (y == null) {
+            return 0;
+        }
+        y = y.toString();
+        if (y[0] == '-') {
+            return '-' + numberWithCommas(y.substr(1));
+        }
+    let res = '';
+    while (y > 0) {
+        res = ',' + String(y % 1000).padStart(3, '0') + res;
+        y = Math.floor(y / 1000);
+    }
+    res = res.substr(1);
+    while (res[0] == '0') {
+        res = res.substr(1);
+    }
+    return res + ' VND';
+    }
+
+    $(document).ready(function(){
+        $('.soTienDong').each(function(){
+            $(this).text(numberWithCommas($(this).text())) ;
+        });
+    });
+    $(document).ready(function(){
+        $('.hocPhi').each(function(){
+            $(this).text(numberWithCommas($(this).text())) ;
+        });
+    });
+    $(document).ready(function(){
+        $('#dong').text(numberWithCommas($('#dong').text())) ;
+    });
+    $(document).ready(function(){
+        $('#tongTien').text(numberWithCommas($('#tongTien').text())) ;
+    });
+    $(document).ready(function(){
+        $('#no').text(numberWithCommas($('#no').text())) ;
+    });
+
+
+
+</script>
+
+{% endblock %}

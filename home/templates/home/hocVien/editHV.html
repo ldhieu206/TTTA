@@ -1,0 +1,135 @@
+{% extends 'home/hocVien/baseHV.html' %}
+{% block content %}
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Sửa thông tin cá nhân</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+            {% csrf_token %}
+            <input id="csrf" style="display: none" value="{{ csrf_token }}">
+              <div class="form-group">
+                <label for="inputName">Mã Học viên</label>
+                <input type="text" id="maHV" class="form-control" value="{{hocVien.maHV}}" placeholder="" disabled>
+              </div>
+              <div class="form-group">
+                <label for="inputName">Tên Học Viên</label>
+                <input type="text" id="name" class="form-control" value="{{hocVien.name}}">
+              </div>
+              <div class="form-group">
+                <label for="inputName">Giới Tính</label>
+                <select id="gioiTinh" class="form-select" aria-label="Default select example" value="{{hocVien.gioiTinh}}">
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="ngaySinh">Ngày Sinh</label>
+                <input type="date" id="ngaySinh" class="form-control" value="{{hocVien.ngaySinh|date:'Y-m-d' }}">
+              </div>
+              <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" id="phone" class="form-control" value="{{hocVien.phone}}">
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" id="email" class="form-control" value="{{hocVien.email}}">
+              </div>
+              <div class="form-group">
+                <label for="diaChi">Địa chỉ </label>
+                <input type="text" id="diaChi" class="form-control" value="{{hocVien.diaChi}}">
+              </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" id="password" class="form-control" value="{{hocVien.password}}">
+                </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      <div class="row">
+        <div class="col-12">
+          <a href="{% url 'homeHV' %}" class="btn btn-secondary">Hủy</a>
+          <button class="btn btn-primary" onclick="editHocVien('{{item.maHV }}')" type="submit" >
+            <i class="fas fa-save"></i>
+            Lưu
+            </button>
+        </div>
+      </div>
+      </div>
+      <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm lớp học</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='thongBao'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>
+    </section>
+  </div>
+
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script>
+        function editHocVien(maHV){
+            var payload = new FormData();
+            payload.append('maHV', document.getElementById('maHV').value);
+            payload.append('name', $('#name').val());
+            payload.append('gioiTinh', $('#gioiTinh').val());
+            payload.append('ngaySinh', $('#ngaySinh').val());
+            payload.append('phone', $('#phone').val());
+            payload.append('email', $('#email').val());
+            payload.append('diaChi', $('#diaChi').val());
+            payload.append('password', $('#password').val());
+            payload.append('_token', $('#csrf').val());
+            payload.append('csrfmiddlewaretoken', $('#csrf').val());
+            $.ajax({
+                url: '/editHV/',
+                type: 'POST',
+                data: payload,
+                contentType: false,
+                processData: false,
+                success: function(data){
+                  if(data.success == true){
+                    $('#thongBao').html('<div class="alert alert-success">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                    setTimeout(function(){
+                      $('#modal-them').modal('hide');
+                      window.location.href = '{% url 'account' %}';
+                    }, 2000);
+                  }else{
+                    $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                    setTimeout(function(){
+                      $('#modal-them').modal('hide');
+                    }, 2000);
+                  }
+                }
+            });
+
+        }
+      </script>
+    </section>
+    <!-- /.content -->
+  </div>
+{% endblock %}

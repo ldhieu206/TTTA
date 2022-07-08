@@ -1,0 +1,139 @@
+{% extends "home/admin/baseAdmin.html" %}
+    
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Danh sách giáo viên</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Danh sách giáo viên</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Danh sách giáo viên</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+        {% csrf_token %}
+                <div class="search-form">
+            <form action="/searchGV/" method="post">
+                {% csrf_token %}
+                <input class="form-control" type="text" name="search" placeholder="Tìm kiếm...">
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+            </form>
+        </div>
+        <input id="csrf" style="display: none" value="{{ csrf_token }}">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                  <th>Mã Giáo Viên</th>
+                  <th>Tên Giáo Viên</th>
+                  <th>Giới Tính</th>
+                  <th>Ngày Sinh</th>
+                  <th>Số điện thoại</th>
+                  <th>Email</th>
+                  <th>Lương</th>
+                  <th style="width: 20%" class="text-center">
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                    {% for item in dsGiaoVien %}
+                    <tr>
+                        <td></td>
+                        <td>{{item.maGV}}</td>
+                        <input id="maGV" type="hidden" name="maGV" value="{{item.maGV}}">
+                        <td>{{item.tenGV}}</td>
+                        <td>{{item.gioiTinh}}</td>
+                        <td>{{item.ngaySinh}}</td>
+                        <td>{{item.sdt}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.luongNgay}}</td>
+                        <td class="project-actions text-right">
+                        <a class="btn btn-primary btn-sm" href="/lopHocGV/{{ item.maGV }}/">
+                            <i class="fas fa-folder">
+                            </i>
+                            Xem
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="/editGiaoVien/{{ item.maGV }}/">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Sửa
+                        </a>
+                        <button onclick="deleteGiaoVien('{{item.maGV}}')" class="btn btn-danger btn-sm" href="">
+                            <i class="fas fa-trash">
+                            </i>
+                            Xóa
+                        </button>
+                    </td>
+                    </tr>
+                    {% endfor %}
+              </tbody>
+          </table>
+        </div>
+        <div>
+            <a href="/addGiaoVien/" class="btn btn-primary">Thêm giáo viên</a>
+            <button type="submit" class="btn btn-primary float-right" onclick="quay_lai_trang_truoc()">Quay lại</button>
+        </div>
+
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  function deleteGiaoVien(maGV) {
+    var payload = new FormData();
+    payload.append('maGV', maGV);
+    payload.append('_token', $('#csrf').val());
+    payload.append('csrfmiddlewaretoken', $('#csrf').val());
+    var r = confirm("Bạn có chắc chắn muốn xóa?");
+    if (r == true) {
+    $.ajax({
+      url: '/deleteGiaoVien/',
+      type: 'POST',
+      data: payload,
+      contentType: false,
+      processData: false,
+      success: function(data) {
+        console.log(maGV);
+        alert("Xóa thành công");
+        location.reload();
+      }
+    });
+  }
+  }
+  function quay_lai_trang_truoc() {
+    window.history.back();
+  }
+</script>
+{% endblock %}

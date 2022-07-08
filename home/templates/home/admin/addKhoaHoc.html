@@ -1,0 +1,143 @@
+{% extends "home/admin/baseAdmin.html" %}
+{% block content %}
+<div class="content-wrapper">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>Thêm khóa học</h1>
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Thêm khóa học</li>
+        </ol>
+        </div>
+    </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+    <div class="col-12">
+        <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Tạo khóa học</h3>
+
+            <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            </div>
+        </div>
+        <div class="card-body">
+        <form onsubmit="return false">
+        {% csrf_token %}
+            <input id="csrf" style="display: none" value="{{ csrf_token }}">
+            <div class="form-group">
+                <label for="maKH">Mã khóa học</label>
+                <input type="text" class="form-control" id="maKH"  placeholder="Mã khóa học" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+            <div class="form-group">
+                <label for="tenKH">Tên khóa học</label>
+                <input type="text" class="form-control" id="tenKH"  placeholder="Tên khóa học" required>
+            </div>
+            <div class="form-group">
+                <label for="moTa">Mô tả</label>
+                <input type="text" class="form-control" id="moTa"  placeholder="Mô tả" required>
+            </div>
+            <div class="form-group">
+                <label for="img">Ảnh</label>
+                <input type="file" class="form-control" id="img"  placeholder="Tên học viên" required>
+            </div>
+            <div class="form-group">
+                <label for="ghiChu">Ghi chú</label>
+                <input type="text" class="form-control" id="ghiChu"  placeholder="Ghi Chú" required>
+            </div>
+            {% comment %} <button onclick="addKhoaHoc()" type="submit" class="btn btn-primary">Thêm</button> {% endcomment %}
+        </div>
+        <!-- /.card-body -->
+        </div>
+            <div class="row">
+                <div class="col-12">
+                <a href="{% url 'dsKhoaHoc' %}" class="btn btn-secondary">Hủy</a>
+                <button class="btn btn-primary"  onclick="addKhoaHoc()" type="submit" >
+                <i class="fas fa-save"></i>
+                Thêm
+                </button>
+            </div>
+        </div>
+        </form>
+        <!-- /.card -->
+    </div>
+    <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm lớp học</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='thongBao'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>
+    <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function addKhoaHoc() {
+        var payload = new FormData();
+        payload.append('_token', $('#csrf').val());
+        payload.append('maKH', document.getElementById('maKH').value);
+        payload.append('tenKH', $('#tenKH').val());
+        payload.append('moTa', $('#moTa').val());
+        payload.append('img', $('#img')[0].files[0]);
+        payload.append('ghiChu', $('#ghiChu').val());
+        payload.append('csrfmiddlewaretoken', $('#csrf').val());
+        $.ajax({
+            url: '/addKhoaHoc/',
+            type: 'POST',
+            data: payload,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if(data.success == true){
+                    $('#thongBao').html(data.message);
+                    $('#modal-them').modal('show');
+                    setTimeout(function(){
+                        $('#modal-them').modal('hide');
+                        window.location.href = '/dsKhoaHoc/';
+                    }, 2000);
+                }else{
+                    $('#thongBao').html(data.message);
+                    $('#modal-them').modal('show');
+                    setTimeout(function(){
+                        $('#modal-them').modal('hide');
+                    }, 2000);
+                }
+                //$('#thongBao').html(data.message);
+                //$('#modal-them').modal('show');
+                //setTimeout(function() {
+                  //  window.location.href = '{% url 'dsKhoaHoc' %}';
+                //}, 2000); 
+            }
+        });
+    }
+
+</script>
+{% endblock %}

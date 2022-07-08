@@ -1,0 +1,243 @@
+{% extends "home/admin/baseAdmin.html" %}
+    
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Thêm lớp học</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Thêm lớp học</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Thêm Lớp Học</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+        {% csrf_token %}
+        <form onsubmit="return false">
+            <input id="csrf" style="display: none" value="{{ csrf_token }}">
+            <div class = "form-group">
+                <label for = "lopHoc">Mã Lớp Học</label>
+                <input type = "text" class = "form-control" id = "maLop" name = "maLop"  placeholder = "Nhập lớp học" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+            <div class = "form-group">
+                <label for = "khoi">Tên Lớp</label>
+                <input type = "text" class = "form-control" id = "tenLop" name = "tenLop" required placeholder = "Nhập Tên Lớp">
+            </div>
+            <div id="lichHoc" class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th></th>
+                        <th>Thứ 2</th>
+                        <th>Thứ 3</th>
+                        <th>Thứ 4</th>
+                        <th>Thứ 5</th>
+                        <th>Thứ 6</th>
+                        <th>Thứ 7</th>
+                        <th>Chủ nhật</th>
+                    </tr>
+                    {% for k in range8 %}
+                    <tr>
+                        <th>Ca {{k}}</th>
+                            {% for i in range7 %}
+                                <td>
+                                    <input type="checkbox" class="lh" name="l{{i}}" value="{{i}}">
+                                </td>
+                            {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class = "">
+                <label for = "giaoVien_id">Chọn Giáo Viên</label>
+                <select id="giaoVien_id" class="form-select" aria-label="Default select example">
+                {% for item in dsGiaoVien %}
+                    <option value="{{item.maGV}}">{{item.tenGV}}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class = "form-group">
+                <label for = "ngayBatDau">Ngày bắt đầu</label>
+                <input type = "date" class = "form-control" id = "ngayBatDau" name = "ngayBatDau" required placeholder = "Nhập ngày bắt đầu">
+            </div>
+            <div class = "form-group">
+                <label for = "ngayKetThuc">Ngày kết thúc</label>
+                <input type = "date" class = "form-control" id = "ngayKetThuc" name = "ngayKetThuc" required placeholder = "Nhập ngày kết thúc">
+            </div>
+            <div class = "form-group">
+                <label for = "soLuong">Số lượng học viên Max</label>
+                <input type = "number" class = "form-control" id = "soLuongHocVienMax" name = "soLuongHocVienMax" placeholder = "Nhập số lượng Học Viên Max" required>
+            </div>
+            <div class = "form-group">
+                <label for = "monHoc">Trả Theo Khóa</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="traTheoKhoa" value="">
+                    <label class="form-check-label" for="inlineCheckbox1"></label>
+                </div>
+                <input type = "number" class = "form-control" id = "hocPhi_dot" name = "hocPhi" value = "0" placeholder = "Nhập học phí đợt">
+            </div>
+            <div class = "hpc form-group">
+                <label for = "giaoVien">Học Phí Ca</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="hpc" value="0" checked = "1" placeholder = ">
+                    <label class="form-check-label" for="inlineCheckbox1"></label>
+                </div>
+                <input type = "number" class = "form-control" id = "hocPhi_ca" name = "hocPhi_ca" value = "0" placeholder = "Nhập Học Phí Ca">
+            </div>
+            <div class = "form-group">
+                <label for = "hocPhi">Lương giáo viên ca</label>
+                <input type = "currentcy" class = "form-control" id = "luongGV_ca" name = "luongGV_ca" placeholder = "Nhập lương giáo viên ca">
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-12">
+                <a href="{% url 'dsLopHocAdmin' %}" class="btn btn-secondary">Hủy</a>
+                <button class="btn btn-primary" onclick="addLopHoc('{{maLop}}')" type="submit" >
+                <i class="fas fa-save"></i>
+                Thêm
+                </button>
+            </div>
+        </div>
+        </form>
+            {% comment %} <button onclick="addLopHoc('{{maLop}}')" type = "submit" class = "btn btn-primary">Thêm</button> {% endcomment %}
+            </div>
+        </div>
+        <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm lớp học</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='thongBao'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>   
+    </div>
+    </section>
+    </div>
+    </div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#hocPhi_dot").hide();
+        $("#hocPhi_ca").hide();
+        $("#hpc").click(function(){
+            if($("#hpc").is(":checked")){
+                $("#hocPhi_ca").show();
+                $('#traTheoKhoa').attr('disabled', true);
+            }
+            else{
+                $("#hocPhi_ca").hide();
+                $('#traTheoKhoa').attr('disabled', false);
+            }
+        });
+        $("#traTheoKhoa").click(function(){
+            if($("#traTheoKhoa").is(":checked")){
+                $("#hocPhi_dot").show();
+                //disable hpc
+                $('#hpc').attr('disabled', true);
+            }
+            else{
+                $("#hocPhi_dot").hide();
+                //enable hpc
+                $('#hpc').attr('disabled', false);
+            }
+        });
+    });
+
+
+
+    function addLopHoc(maLop){
+        let dslh = [];
+        let ds = document.getElementsByClassName("lh");
+        for (let i = 0; i < ds.length; i++) {
+            if(ds[i].checked){
+                dslh.push(i);
+            }
+        }
+
+        var payload = new FormData();
+        payload.append('dslh', dslh);
+        payload.append('maLop', document.getElementById('maLop').value);
+        payload.append('tenLop', document.getElementById('tenLop').value);
+        payload.append('giaoVien_id', document.getElementById('giaoVien_id').value);
+        payload.append('hocPhi_ca', document.getElementById('hocPhi_ca').value);
+        payload.append('ngayBatDau', document.getElementById('ngayBatDau').value);
+        payload.append('ngayKetThuc', document.getElementById('ngayKetThuc').value);
+        payload.append('traTheoKhoa', document.getElementById('traTheoKhoa').checked);
+        payload.append('soLuongHocVienMax', document.getElementById('soLuongHocVienMax').value);
+        payload.append('hocPhi_dot', document.getElementById('hocPhi_dot').value);
+        payload.append('luongGV_ca', document.getElementById('luongGV_ca').value);
+
+        payload.append('csrfmiddlewaretoken', $('#csrf').val());
+        $.ajax({
+            url: '/addLopHoc/',
+            type: 'POST',
+            data: payload,
+            processData: false,
+            contentType: false,
+            success: function(data){
+                if(data.success == true){
+                    $('#modal-them').modal('show');
+                    $('#thongBao').html('<div class="alert alert-success">'+data.message+'</div>');
+                    setTimeout(function(){
+                        window.location.href = '/dsLopHocAdmin/';
+                    }, 2000);
+                }
+                else{
+                    $('#modal-them').modal('show');
+                    $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
+                }
+            }
+        });
+    }
+
+    function numberWithCommas(y) {
+  let res = '';
+  while (y > 0) {
+    res = ',' + String(y % 1000).padStart(3, '0') + res;
+    y = Math.floor(y / 1000);
+  }
+  res = res.substr(1);
+  while (res[0] == '0') {
+    res = res.substr(1);
+  }
+  return res;
+
+let a = document.getElementById("luongGV_ca");
+a.value = numberWithCommas(a.value);
+}
+</script>
+{% endblock %}

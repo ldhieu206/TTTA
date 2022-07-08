@@ -1,0 +1,217 @@
+{% extends "home/admin/baseAdmin.html" %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Thống kê</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Thống kê</li>
+            </ol>
+          </div>                                              
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Khoản chi</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Mã giáo viên</th>
+                    <th>Ngày</th>
+                    <th>Số tiền nhận</th>
+                    <th>Ghi chú</th>
+                  </tr>
+              </thead>
+              <tbody>
+                    {% for item in luongGV %}
+                    <tr>
+                        <td></td>
+                        <td>{{ item.giaoVien_id }}</td>
+                        <td>{{ item.ngay|date:"d-m-Y" }}</td>
+                        <td class="soTienNhan">{{ item.soTienNhan }}</td>
+                        <td>{{ item.ghiChu }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td colspan="2">Tổng</td>
+                        <td id="chi">{{ chi }}</td>
+                        <td></td>
+
+                    </tr>
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Khoản thu</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Mã học viên</th>
+                    <th>Ngày</th>
+                    <th>Số tiền đóng</th>
+                    <th>Ghi chú</th>
+                  </tr>
+              </thead>
+              <tbody>
+                    {% for item in hocPhiHV %}
+                    <tr>
+                        <td></td>
+                        <td>{{ item.hocVien_id }}</td>
+                        <td>{{ item.ngay|date:"d-m-Y" }}</td>
+                        <td class="soTienDong" >{{ item.soTienDong }}</td>
+                        <td>{{ item.ghiChu }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td colspan="2">Tổng</td>
+                        <td id="thu">{{ thu }}</td>
+                        <td></td>
+                    </tr>
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Thu nhập của trung tâm</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Thu nhập của trung tâm</th>
+                  </tr>
+              </thead>
+              <tbody>
+                    <tr>
+                        <td></td>
+                        <td>Tổng</td>
+                        <td id="thuNhap" class="thuNhap" >{{thuNhap}}</td>
+                    </tr>
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <button type="submit" onclick="quay_lai_trang_truoc();" class="btn btn-primary float-right">Quay lại</button>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+ function deleteHocVien(maHV) {
+    var payload = new FormData();
+    payload.append('maHV', maHV);
+    payload.append('_token', $('#csrf').val());
+    payload.append('csrfmiddlewaretoken', $('#csrf').val());
+    var r = confirm("Bạn có chắc chắn muốn xóa?");
+    if (r == true) {
+    $.ajax({
+        url: '/deleteHocVien/',
+        type: 'POST',
+        data: payload,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+          console.log(maHV);
+            alert("Xóa thành công");
+            window.location.reload();
+        }
+    });
+}
+}
+function quay_lai_trang_truoc() {
+    window.history.back();
+}
+
+function numberWithCommas(y) {
+  let res = '';
+  while (y > 0) {
+    res = ',' + String(y % 1000).padStart(3, '0') + res;
+    y = Math.floor(y / 1000);
+  }
+  res = res.substr(1);
+  while (res[0] == '0') {
+    res = res.substr(1);
+  }
+  return res;
+}
+Object.values(document.getElementsByClassName("soChuaThanhToan")).forEach((item) => {
+  item.innerHTML = numberWithCommas(item.innerHTML) + ' VNĐ';
+});
+
+Object.values(document.getElementsByClassName("soTienDong")).forEach((item) => {
+  item.innerHTML = numberWithCommas(item.innerHTML) + ' VNĐ';
+});
+
+Object.values(document.getElementsByClassName("soTienNhan")).forEach((item) => {
+  item.innerHTML = numberWithCommas(item.innerHTML) + ' VNĐ';
+});
+</script>
+{% endblock %}

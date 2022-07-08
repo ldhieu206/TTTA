@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản lý trung tâm | Dashboard</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/media/plugins/fontawesome-free/css/all.min.css" >
+  <link rel="stylesheet" href="/media/plugins/fontawesome-free/css/all.css" >
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="/media/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="/media/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="/media/plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/media/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="/media/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/media/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="/media/plugins/summernote/summernote-bs4.min.css">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img src="../media/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div>
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'homeGV' %}" class="nav-link">Home</a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Navbar Search -->
+      <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
+        </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </li>
+
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-comments"></i>
+          <span class="badge badge-danger navbar-badge">3</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="../media/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Brad Diesel
+                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">Call me whenever you can...</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="../media/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  John Pierce
+                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">I got your message bro</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="../meida/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Nora Silvester
+                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">The subject goes here</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+        </div>
+      </li>
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-warning navbar-badge">15</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i> 4 new messages
+            <span class="float-right text-muted text-sm">3 mins</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-users mr-2"></i> 8 friend requests
+            <span class="float-right text-muted text-sm">12 hours</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-file mr-2"></i> 3 new reports
+            <span class="float-right text-muted text-sm">2 days</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
+          <i class="fas fa-th-large"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'homeGV' %}" class="brand-link">
+      <img src="/media/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">TRUNG TÂM TIẾNG ANH</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="/media/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="{% url 'accountGV' %}" class="d-block"></a>
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Lớp học
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'dsLopHoc' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh sách</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Giáo viên
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'dsGiaoVien' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh sách</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Học viên
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'dsHocVien' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh sách</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        
+          <li class="nav-header">EXAMPLES</li>
+          <li class="nav-item">
+            <a href="{% url 'lichDay' %}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Thời khóa biểu
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Thông tin giáo viên
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'accountGV' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Thông tin giáo viên</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'editGV' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Thay đổi thông tin</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'logoutGV' %}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Đăng Xuất
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Thông tin học viên</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Thông tin học viên</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Thông tin phụ huynh</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Mã Phụ Huynh</th>
+                                    <th>Mã Học Viên</th>
+                                    <th>Tên Phụ Huynh</th>
+                                    <th>Số Điện Thoại</th>
+                                    <th>Số Zalo</th>
+                                    <th>Email</th>
+                                    <th>Send Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for  item in phuHuynh %}
+                                <tr>
+                                    <td>{{item.maPH}}</td>
+                                    <input type="text" id="maHV" value="{{item.hocVien_id}}" style="display: none">
+                                    <td>{{item.hocVien_id}}</td>
+                                    <td>{{item.tenPH}}</td>
+                                    <td>{{item.sdt1}}</td>
+                                    <td>{{item.soZalo}}</td>
+                                    <td>{{item.email}}</td>
+                                    <td>
+                                        <button onclick="send_email('{{item.hocVien_id}}');" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                            Gửi Mail
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Học phí</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0">
+                    <input id="csrf" style="display: none" value="{{ csrf_token }}">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Mã Học Viên</th>
+                                    <th>Lớp học</th>
+                                    <th>Ngày đăng kí</th>
+                                    <th>Học phí</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for  item in hocPhi %}
+                                <tr>
+                                    <td>{{item.hocVien_id}}</td>
+                                    <td>{{item.lopHoc_id}}</td>
+                                    <td>{{item.ngayDangKy}}</td>
+                                    <td class="soChuaThanhToan">{{item.hocPhi}}</td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="3">Tổng học phí</td>
+                                    <td id="tongTien">{{hp}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+            </div>
+        <!-- /.card-body -->
+        <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Học phí đóng</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="card-body p-0">
+                    <input id="csrf" style="display: none" value="{{ csrf_token }}">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Mã học viên</th>
+                                    <th>Ngày đóng</th>
+                                    <th>Số tiền đóng</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for  item in dthv %}
+                                <tr>
+                                    <td>{{item.hocVien_id}}</td>
+                                    <td>{{item.ngay}}</td>
+                                    <td class ="soTienDong" >{{ item.soTienDong }}</td>
+                                    <td>{{item.ghiChu}}</td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="2">Tổng tiền đã đóng </td>
+                                    <td id="tongTienDong">{{tongTienDong}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+        <!-- /.card-footer -->
+      </div>
+      <!-- /.card -->
+                    <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Thời khóa biểu học viên</h3>
+
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                    <div class="card-body p-0">
+                    <input id="csrf" style="display: none" value="{{ csrf_token }}">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th></th>
+                            <th>Thứ 2</th>
+                            <th>Thứ 3</th>
+                            <th>Thứ 4</th>
+                            <th>Thứ 5</th>
+                            <th>Thứ 6</th>
+                            <th>Thứ 7</th>
+                            <th>Chủ nhật</th>
+                        </tr>
+
+                        {% for key,  val in dslh %}
+                        <input type="hidden" id="{{key}}" value="{{val}}">
+                        {% endfor %}
+
+
+                        {% for k in range8 %}
+                            <tr>
+                                <th>Ca {{k}}</th>
+                                    {% for i in range7 %}
+                                        <td class='td_lh'>
+                                        </td>
+                                    {% endfor %}
+
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    </div>
+                <button type="submit" class="btn btn-primary float-right" onclick="quay_lai_trang_truoc()">Quay lại</button>
+                  </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          </div>
+          <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm lớp học</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='thongBao'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+            let ds = document.getElementsByClassName('td_lh');
+
+            for (let i = 0; i < ds.length; i++) {
+                try {
+                    let val = document.getElementById(i).value;
+                    ds[i].innerHTML = val;
+                }
+                catch (e) {
+                    
+                }
+            }
+
+        function send_email(maHV) {
+            var payload = new FormData();
+
+            payload.append('maHV', maHV);
+            payload.append('tongTien',document.getElementById('tongTien').innerHTML);
+            payload.append('tongDaDong',document.getElementById('tongTienDong').innerHTML);
+            payload.append('csrfmiddlewaretoken', $('#csrf').val());
+
+            $.ajax({
+                url: '/send_email/',
+                type: 'POST',
+                data: payload,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                if(data.success==true) {
+                    $('#thongBao').html('<div class="alert alert-success">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                }
+                else {
+                    $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                }
+                }
+            });            
+        }
+
+        function numberWithCommas(y) {
+          let res = '';
+          while (y > 0) {
+            res = ',' + String(y % 1000).padStart(3, '0') + res;
+            y = Math.floor(y / 1000);
+          }
+          res = res.substr(1);
+          while (res[0] == '0') {
+            res = res.substr(1);
+          }
+          return res;
+        }
+        Object.values(document.getElementsByClassName("soChuaThanhToan")).forEach((item) => {
+          item.innerHTML = numberWithCommas(item.innerHTML) + ' VNĐ';
+        });
+
+        Object.values(document.getElementsByClassName("soTienDong")).forEach((item) => {
+          item.innerHTML = numberWithCommas(item.innerHTML) + ' VNĐ';
+        });
+
+let a = document.getElementById('tongTienDong')
+a.innerHTML = numberWithCommas(a.innerHTML) + ' VNĐ';
+
+let b = document.getElementById('tongTien')
+b.innerHTML = numberWithCommas(b.innerHTML) + ' VNĐ';
+
+    function quay_lai_trang_truoc() {
+        window.history.back();
+    }
+
+
+    </script>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../media/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="../media/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="/media/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="/media/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="/media/plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="/media/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="/media/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="/media/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="/media/plugins/moment/moment.min.js"></script>
+<script src="/media/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="/media/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="/media/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="/media/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/media/dist/js/adminlte.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/media/dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="/media/dist/js/pages/dashboard.js"></script>
+
+</body>
+</html>

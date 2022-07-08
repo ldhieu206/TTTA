@@ -1,0 +1,295 @@
+{% extends "home/admin/baseAdmin.html" %}
+    
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Danh sách giáo viên</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Danh sách giáo viên</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Danh sách giáo viên</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+        {% csrf_token %}
+                <div class="search-form">
+            <form action="/searchGV/" method="post">
+                {% csrf_token %}
+                <input class="form-control" type="text" name="search" placeholder="Tìm kiếm...">
+                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+            </form>
+        </div>
+        <input id="csrf" style="display: none" value="{{ csrf_token }}">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                  <th>Mã Giáo Viên</th>
+                  <th>Tên Giáo Viên</th>
+                  <th>Giới Tính</th>
+                  <th>Ngày Sinh</th>
+                  <th>Số điện thoại</th>
+                  <th>Email</th>
+                  <th>Lương</th>
+                  <th style="width: 20%" class="text-center">
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <input id='magv' value="" hidden>
+                    {% for item in dsGiaoViens %}
+                    <tr>
+                        <td></td>
+                        <td>{{item.maGV}}</td>
+                        <input id="maGV" type="hidden" name="maGV" value="{{item.maGV}}">
+                        <td>{{item.tenGV}}</td>
+                        <td>{{item.gioiTinh}}</td>
+                        <td>{{item.ngaySinh|date:"d-m-Y"}}</td>
+                        <td>{{item.sdt}}</td>
+                        <td>{{item.email}}</td>
+                        <td class="luongNgay" >{{item.luongNgay}}</td>
+                        <td class="project-actions text-right">
+                        <button class="btn btn-primary btn-sm" onclick="modalLuong('{{ item.maGV }}')">
+                            <i class="fas fa-folder">
+                            </i>
+                            Thanh toán
+                        </button>
+                        <a class="btn btn-primary btn-sm" href="/lopHocGV/{{ item.maGV }}/">
+                            <i class="fas fa-folder">
+                            </i>
+                            Xem
+                        </a>
+                        <a class="btn btn-primary btn-sm" href="/editGiaoVien/{{ item.maGV }}/">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Sửa
+                        </a>
+                        <button onclick="modal('{{ item.maGV }}')"  class="btn btn-danger btn-sm" href="#">
+                            <i class="fas fa-trash">
+                            </i>
+                            Xóa
+                        </button>
+                        <div class="modal fade" id="modal-default">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h4 class="modal-title">Xóa giáo viên</h4>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <p id ='thongBao'></p>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="submit" onclick="deleteGiaoVien()" class="btn btn-primary" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-xoa">OK</button>
+                                  </div>
+                              </div>
+                              <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                      </div>
+                      <div class="modal fade" id="modal-xoa" aria-hidden="true">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h4 class="modal-title">Xóa giáo viên</h4>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <p id='descriptions'></p>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                  </div>
+                              </div>
+                              <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                      </div>
+                    </td>
+                    </tr>
+                    {% endfor %}
+              </tbody>
+          </table>
+        </div>
+        <div>
+            <a href="/addGiaoVien/" class="btn btn-primary">Thêm giáo viên</a>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+</div>
+    <div class="modal fade" id="modal-luong">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thanh toán</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form  onsubmit="return false;" >
+                        {% csrf_token %}
+                        <input id="csrf" style="display: none" value="{{ csrf_token }}">
+                        <div class="form-group">
+                            <label for="">Mã học viên</label>
+                            <input type="text" class="form-control" value="" name="hocVien_id" id="giaoVien_id" placeholder="Nhập mã học viên" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Số tiền trả</label>
+                            <input type="text" class="form-control" name="soTienDong"  id="soTienNhan" placeholder="Nhập số tiền trả" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ngày trả</label>
+                            <input type="date" class="form-control" name="ngay" id="ngay" placeholder="Nhập ngày trả">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ghi chú</label>
+                            <input type="text" class="form-control" name="ghiChu" id="ghiChu" placeholder="Nhập ghi chú">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="traLuong();">Thanh toán</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    </div>
+        <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Trả lương</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='tb'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  function deleteGiaoVien() {
+    var maGV = $('#magv').val();
+    var payload = new FormData();
+    payload.append('maGV', maGV);
+    payload.append('_token', $('#csrf').val());
+    payload.append('csrfmiddlewaretoken', $('#csrf').val());
+    $.ajax({
+      url: '/deleteGiaoVien/',
+      type: 'POST',
+      data: payload,
+      contentType: false,
+      processData: false,
+      success: function(data) {
+            document.getElementById('descriptions').innerHTML = data.message;
+            setTimeout(function(){
+            location.reload();
+          }, 2000);
+      }
+    });
+  }
+
+  document.getElementById("ngay").value = new Date().toISOString().split('T')[0];
+
+
+  function modal(maGV) {
+    $('#modal-default').modal('show');
+    $('#magv').val(maGV);
+    $('#thongBao').text('Bạn có chắc chắn muốn xóa giáo viên '+maGV+'?');
+  }
+
+  function modalLuong(maGV) {
+    $('#modal-luong').modal('show');
+    $('#giaoVien_id').val(maGV);
+  }
+
+  function traLuong() {
+    var payload = new FormData();
+    payload.append('giaoVien_id', $('#giaoVien_id').val());
+    payload.append('soTienNhan', $('#soTienNhan').val());
+    payload.append('ngay', $('#ngay').val());
+    payload.append('ghiChu', $('#ghiChu').val());
+    payload.append('_token', $('#csrf').val());
+    payload.append('csrfmiddlewaretoken', $('#csrf').val());
+    $.ajax({
+      url: '/thanhToanLuong/',
+      type: 'POST',
+      data: payload,
+      contentType: false,
+      processData: false,
+      success: function(data) {
+            if(data.success == true){
+                $('#modal-them').modal('show');
+                $('#tb').html('<div class="alert alert-success">'+data.message+'</div>');
+                setTimeout(function(){
+                    window.location.reload();
+                }, 2000);
+            }else{
+                $('#modal-them').modal('show');
+                $('#tb').html('<div class="alert alert-danger">'+data.message+'</div>');
+            }
+      }
+    });
+  }
+
+  function numberWithCommas(y) {
+  let res = '';
+  while (y > 0) {
+    res = ',' + String(y % 1000).padStart(3, '0') + res;
+    y = Math.floor(y / 1000);
+  }
+  res = res.substr(1);
+  while (res[0] == '0') {
+    res = res.substr(1);
+  }
+  return res;
+}
+Object.values(document.getElementsByClassName("luongNgay")).forEach((item) => {
+  item.innerHTML = numberWithCommas(item.innerHTML) + ' VNĐ';
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,167 @@
+{% extends "home/admin/baseAdmin.html" %}
+    
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Danh sách khóa học</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Danh sách khóa học</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Danh sách khóa học</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+        {% csrf_token %}
+        <input id="csrf" style="display: none" value="{{ csrf_token }}">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Mã khóa học</th>
+                    <th>Tên khóa học</th>
+                    <th>Mô tả</th>
+                  <th style="width: 20%" class="text-center">
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+              <input id="makh" value="" hidden>
+              {%for item in dsKhoaHocs%}
+                    <tr>
+                        <td></td>
+                        <input type="hidden" name="id" value="{{item.id}}" id='{{item.maKH}}'>
+                        <td class='makh'>{{item.maKH}}</td>
+                        <td>{{item.tenKH}}</td>
+                        <td>{{item.moTa}}</td>
+                        <td class="project-actions text-right">
+                        <a class="btn btn-primary btn-sm" href="/editKhoaHoc/{{ item.maKH }}/">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Sửa
+                        </a>
+                        <button onclick="modal('{{ item.maKH}}');" class="btn btn-danger btn-sm" href="#">
+                            <i class="fas fa-trash">
+                            </i>
+                            Xóa
+                        </button>
+
+                    </td>
+                {%endfor%}
+              </tbody>
+          </table>
+        </div>
+        <div>
+            <a class="btn btn-primary" href="/addKhoaHoc/">
+                </i>
+                Thêm khóa học
+            </a>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    </section>
+    <!-- /.content -->
+  </div>
+    <!-- /.content -->
+  </div>
+</div>
+<!--modal-->
+<div class="modal fade" id="modal-default">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Xóa khóa học</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id = "thongBao"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="submit" onclick="deleteKhoaHoc()" class="btn btn-primary" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-xoa">OK</button>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modal-xoa" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Xóa khóa học</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p id ="message">Xóa thành công</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+    function deleteKhoaHoc() {
+        var maKH = $('#makh').val();
+        var payload = new FormData();
+        var csrf = $('#csrf').val();
+        payload.append('maKH', maKH);
+        payload.append('csrfmiddlewaretoken', $('#csrf').val());
+        $.ajax({
+            url: '/deleteKhoaHoc/',
+             type: 'POST',
+            data: payload,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+              $('#message').text(data.message);
+              setTimeout(function(){
+                location.reload();
+              }, 2000);
+            }
+        });
+    }
+
+    function modal(maKH){
+        $('#modal-default').modal('show');
+        $('#makh').val(maKH);
+        document.getElementById('thongBao').innerHTML = "Bạn có chắc chắn muốn xóa khóa học " + maKH + "?";
+    }
+
+
+</script>
+{% endblock %}

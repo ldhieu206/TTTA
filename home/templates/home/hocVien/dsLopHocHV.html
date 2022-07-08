@@ -1,0 +1,255 @@
+{% extends "home/hocVien/baseHV.html" %} 
+{% block title %} 
+{% endblock title %} 
+{% block content %} 
+{% csrf_token %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Danh sách lớp học</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Danh sách lớp học</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Danh sách lớp học</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+        {% csrf_token %}
+        <input id="csrf" style="display: none" value="{{ csrf_token }}">
+            <table class="table table-striped projects">
+              <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                  <th>Mã Lớp</th>
+                  <th>Tên Lớp</th>
+                  <th>Học Phí Ca</th>
+                  <th>Ngày Học</th>
+                  <th>Giáo Viên</th>
+                  <th>Học Phí Đợt</th>
+                  <th>Trả Theo Khóa</th>
+                  <th style="width: 20%" class="text-center">
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% for item in dsLopHoc%}
+                <tr>
+                    <td></td>
+                    <input id="maLop" type="text" class="form-control" value="{{item.maLop}}" hidden="true">
+                  <td>{{ item.maLop }}</td>
+                  <td>{{ item.tenLop }}</td>
+                  <td class="hocPhi_ca">{{ item.hocPhi_ca }}</td>
+                  <td>
+                      <button type="submit" onclick="xemLichHocAdmin('{{ item.maLop }}')" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                      Xem lịch học
+                      </button>
+                      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      {%csrf_token%}
+                        <div class="modal-dialog modal-xl">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="staticBackdropLabel">Lịch các lớp</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="panel-body" >
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <th></th>
+                                        <th>Thứ 2</th>
+                                        <th>Thứ 3</th>
+                                        <th>Thứ 4</th>
+                                        <th>Thứ 5</th>
+                                        <th>Thứ 6</th>
+                                        <th>Thứ 7</th>
+                                        <th>Chủ nhật</th>
+                                    </tr>
+
+                                    {% for key,  val in dslh2 %}
+                                    <input type="hidden" id="{{key}}" value="{{val}}">
+                                    {% endfor %}
+
+
+                                    {% for k in range8 %}
+                                        <tr>
+                                            <th>Ca {{k}}</th>
+                                                {% for i in range7 %}
+                                                    <td class='td_lh'>
+                                                    </td>
+                                                {% endfor %}
+
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                              <button type="button" class="btn btn-primary">OK</button>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                  </td>
+                  <td>{{ item.giaoVien_id }}</td>
+                  <td class="hocPhi_dot">{{ item.hocPhi_dot }}</td>
+                  <td class="traTheoKhoa" value="">{{ item.traTheoKhoa }}</td>
+                  <td>
+                    <button
+                      onclick="dangKy('{{ item.maLop }}')"
+                      id="btn"
+                      class="btn btn-primary"
+                      type="submit"
+                      data-toggle="modal"
+                      data-target="#myModal"
+                    >
+                      Đăng ký
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm lớp học</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='thongBao'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+      [...document.getElementsByClassName('traTheoKhoa')].forEach(function(item){
+          if(item.innerHTML == 'False'){
+            item.innerHTML = 'Không';
+          }
+          else{
+            item.innerHTML = 'Có';
+          }
+        })
+
+  function dangKy(maLop) {
+    const payload = new FormData();
+    payload.append("maLop", maLop);
+    payload.append(
+      "csrfmiddlewaretoken",
+      $("input[name=csrfmiddlewaretoken]").val()
+    );
+    $.ajax({
+      url: "/dangKyHoc",
+      type: "POST",
+      data: payload,
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        if(data.success == true) {
+          $('#thongBao').html('<div class="alert alert-success">'+data.message+'</div>');
+          $('#modal-them').modal('show');
+          setTimeout(function(){
+              $('#modal-them').modal('hide');
+              window.location.href = '/lichHoc/';
+          }, 2000);
+        } else {
+          $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
+          $('#modal-them').modal('show');
+          setTimeout(function(){
+              $('#modal-them').modal('hide');
+          }, 2000);
+        }
+      },
+    });
+  }
+
+  function xemLichHocAdmin(maLop) {
+  var payload = new FormData();
+  payload.append('maLop', maLop);
+  payload.append('_token', $('#csrf').val());
+  payload.append('csrfmiddlewaretoken', $('#csrf').val());  
+
+  $.ajax({
+      url: '/xemLichHocAdmin/',
+      type: 'POST',
+      data: payload,
+      contentType: false,
+      processData: false,
+      success: function(data) {
+        console.log(data);
+
+          var ds_td_lh = [...document.getElementsByClassName('td_lh')];
+          ds_td_lh.forEach(function(item, index) {
+            item.innerHTML = '';
+          });
+          Object.keys(data.data.dslh2).forEach(function(key) {
+              ds_td_lh[key].innerHTML = data.data.dslh2[key];
+          });
+            
+      }
+  });
+
+}
+
+  function numberWithCommas(y) {
+  let res = '';
+  while (y > 0) {
+    res = ',' + String(y % 1000).padStart(3, '0') + res;
+    y = Math.floor(y / 1000);
+  }
+  res = res.substr(1);
+  while (res[0] == '0') {
+    res = res.substr(1);
+  }
+  return res;
+}
+Object.values(document.getElementsByClassName("hocPhi_ca")).forEach((item) => {
+  item.innerHTML = numberWithCommas(item.innerHTML) + ' VNĐ';
+});
+
+Object.values(document.getElementsByClassName("hocPhi_dot")).forEach((item) => {
+  item.innerHTML = numberWithCommas(item.innerHTML) + ' VNĐ';
+});
+</script>
+{% endblock %}

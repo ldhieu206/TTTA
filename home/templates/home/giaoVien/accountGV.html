@@ -1,0 +1,220 @@
+{% extends "home/giaoVien/indexGV.html" %} 
+{% block title %} {% endblock title%} 
+{% block content %}
+<div class= " content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Thông tin học viên</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Thông tin học viên</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content">
+
+      <!-- Default box -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Thông tin học viên</h3>
+
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Ảnh đại diện</h3>
+              </div>
+              <div class="card-body">
+                <div class="text-center">
+                  <img src="/media/images/info.jpg" class="img-responsive" alt="" class="img-fluid">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card card-primary">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Thông tin giáo viên</button>
+                  <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Lớp học phụ trách</button>
+                  <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Lương</button>
+                </div>
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                  <div class="col-md-9">
+                    <div class="card card-primary">
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label for="">Họ và tên</label>
+                          <input type="text" class="form-control" value="{{giaoVien.tenGV}}" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Email</label>
+                          <input type="text" class="form-control" value="{{giaoVien.email}}" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Số điện thoại</label>
+                          <input type="text" class="form-control" value="{{giaoVien.sdt}}" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Lương ngày</label>
+                          <input id="luongNgay" type="text" class="form-control"  value="{{giaoVien.luongNgay}}" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Giới tính</label>
+                          <input type="text" class="form-control" value="{{giaoVien.gioiTinh}}" disabled>
+                        </div>
+                        <div class="form-group">
+                          <label for="">Ngày sinh</label>
+                          <input type="text" class="form-control" value="{{ giaoVien.ngaySinh|date:'d-m-Y'}}" placeholder disabled>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0contact-tab" tabindex="0">
+                  <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>Mã Lớp</th>
+                          <th>Tên Lớp</th>
+                          <th>Số Lượng Học Viên</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for item in lopHocs %}
+                      <tr>
+                        <td></td>
+                        <td>{{ item.maLop }}</td>
+                        <td>{{ item.tenLop }}</td>
+                        <td>{{ item.soLuongHocVien }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  </div>
+                </div>
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
+                  <div class="card-body">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>Mã Giáo Viên</th>
+                          <th>Ngày</th>
+                          <th>Số Tiền Nhận</th>
+                          <th>Ghi Chú</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          {% for item in luongGVs %}
+                          <tr>
+                            <td></td>
+                            <td>{{ item.giaoVien_id }}</td>
+                            <td>{{ item.ngay|date:"d-m-Y" }}</td>
+                            <td class="soTienNhan">{{ item.soTienNhan }} </td>
+                            <td>{{ item.ghiChu }}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </section>
+</div>
+
+{% comment %} <div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Thông Tin Giáo Viên</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Mã Giáo Viên</th>
+            <th>Tên Giáo Viên</th>
+            <th>Giới Tính</th>
+            <th>Số Điện Thoại</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a class="nav-link active" href="">{{giaoVien.maGV}}</a>
+            </td>
+            <td>{{giaoVien.tenGV}}</td>
+            <td>{{giaoVien.gioiTinh}}</td>
+            <td>{{giaoVien.sdt}}</td>
+            <td>{{giaoVien.email}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+</div> {% endcomment %}
+<script>
+    const triggerTabList = document.querySelectorAll("#myTab a");
+    triggerTabList.forEach((triggerEl) => {
+      const tabTrigger = new bootstrap.Tab(triggerEl);
+
+      triggerEl.addEventListener("click", (event) => {
+        event.preventDefault();
+        tabTrigger.show();
+      });
+    });
+    function numberWithCommas(y) {
+      let res = '';
+      while (y > 0) {
+        res = ',' + String(y % 1000).padStart(3, '0') + res;
+        y = Math.floor(y / 1000);
+      }
+      res = res.substr(1);
+      while (res[0] == '0') {
+        res = res.substr(1);
+      }
+      return res;
+    }
+        Object.values(document.getElementsByClassName("soTienNhan")).forEach((item) => {
+      item.innerHTML = numberWithCommas(item.innerHTML) + ' VNĐ';
+    });
+
+    let a = document.getElementById("luongNgay");
+    a.innerHTML = numberWithCommas(a.value) + ' VND'
+  </script>
+
+{% endblock content %}

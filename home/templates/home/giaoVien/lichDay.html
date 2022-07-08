@@ -1,0 +1,101 @@
+{% extends "home/giaoVien/baseGV.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                
+                <div class="panel-heading">
+                    <br>
+
+                    <h3 class="panel-title">Thông tin lớp học</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Mã lớp học</th>
+                                        <th>Tên lớp</th>
+                                        <th>Giáo viên</th>
+                                        <th>Số lượng học viên</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for lop in dsLopHoc %}
+                                    <tr>
+                                        <td>{{lop.maLop}}</td>
+                                        <td>{{lop.tenLop}}</td>
+                                        <td>{{lop.giaoVien_id}}</td>
+                                        <td>{{lop.soLuongHocVien}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Thời khóa biểu</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th></th>
+                            <th>Thứ 2</th>
+                            <th>Thứ 3</th>
+                            <th>Thứ 4</th>
+                            <th>Thứ 5</th>
+                            <th>Thứ 6</th>
+                            <th>Thứ 7</th>
+                            <th>Chủ nhật</th>
+                        </tr>
+
+                        {% for key,  val in dslh %}
+                        <input type="hidden" id="{{key}}" value="{{val}}">
+                        {% endfor %}
+
+
+                        {% for k in range8 %}
+                            <tr>
+                                <th>Ca {{k}}</th>
+                                    {% for i in range7 %}
+                                        <td class='td_lh'>
+                                        </td>
+                                    {% endfor %}
+
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+<script>
+
+    let ds = document.getElementsByClassName('td_lh');
+
+    for (let i = 0; i < ds.length; i++) {
+        try {
+            let val = document.getElementById(i).value;
+            ds[i].innerHTML = val;
+        }
+        catch (e) {
+            
+        }
+    }
+
+</script>
+
+{% endblock %}
+                   

@@ -1,0 +1,99 @@
+{% extends "home/admin/baseAdmin.html" %}
+{% block content %}
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Thống kê</h1>
+          </div>
+          <div class="col-sm-6"> 
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Thống kê</li>
+            </ol>
+          </div>
+          <div class="search-form">
+            <form action="/tklh/" method="post">
+                {% csrf_token %}
+                <div class="row align-items-start">
+                  <div class="col">
+                    <label for="">Chọn khoảng ngày cần lọc</label>
+                  </div>
+                  <div class="col">
+                    <select name="maLop" id="ngay" class="form-control">
+                      <option value="">Chọn lớp</option>
+                      {% for lop in dsLopHoc %}
+                        <option value="{{lop.maLop}}">{{lop.tenLop}}({{lop.maLop}})</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="col">
+                    <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                  </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      <section class="content">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Thống kê</h3>
+              </div>
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Mã lớp</th>
+                    <th>Mã học viên</th>
+                    <th>Học phí giảm</th>
+                    <th>Số buổi có mặt</th>
+                    <th>Số buổi đã dạy</th>
+                    <th>Số buổi cần dạy</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for item in hvLH %}
+                  <tr>
+                    <td>{{item.lopHoc_id}}</td>
+                    <td>{{item.hocVien_id}}</td>
+                    <td>{{item.hocPhiGiam}}</td>
+                    <td>{{item.count}}</td>
+                    <td class = "sbDaDay">{{sbDaDay}}</td>
+                    <td class = "sbCanDay">{{sbCanDay}}</td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              <button type="button" class="btn btn-primary float-right" onclick="quay_lai_trang_truoc()">Quay lại</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<script> 
+    [...document.getElementsByClassName('sbCanDay')].forEach(function(item) {
+        item.innerHTML = item.innerHTML - item.previousElementSibling.innerHTML;
+        if(item.innerHTML < 0){
+            item.innerHTML = "Đã hoàn thành";
+            item.previousElementSibling.innerHTML = "Đã hoàn thành";
+        }
+    });
+
+    function quay_lai_trang_truoc(){
+      history.back();
+    }
+
+    </script>
+
+{% endblock %}

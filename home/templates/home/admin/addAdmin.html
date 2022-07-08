@@ -1,0 +1,137 @@
+{% extends "home/admin/baseAdmin.html" %}
+    
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+       <div class="container-fluid">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+        <h1>Thêm Admin</h1>
+        </div>
+        <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Thêm Admin</li>
+        </ol>
+        </div>
+    </div>
+    </div>
+    </section>
+<section class="content">
+    <div class="row">
+    <div class="col-12">
+        <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Tạo Admin</h3>
+
+            <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            </div>
+        </div>
+        {% if user.is_superuser %}
+        <div class="card-body">
+        <form onsubmit="return false">
+        {% csrf_token %}
+            <input id="csrf" style="display: none" value="{{ csrf_token }}">
+            <div class = "form-group">
+                <label for = "lopHoc">Username</label>
+                <input type = "text" class = "form-control" id = "username" name = "" placeholder = "Nhập tên đăng nhập" required>
+            </div>
+            <div class = "form-group">
+                <label for = "khoi">Email</label>
+                <input type = "text" class = "form-control" id = "email" name = "email" placeholder = "Nhập Tên Email" required>
+            </div>
+            <div class = "form-group">
+                <label for = "khoi">Password</label>
+                <input type = "password" class = "form-control" id = "password" name = "password" placeholder = "Nhập password" required>
+            </div>
+            <div class = "form-group">
+                <label for = "khoi">Password</label>
+                <input type = "password" class = "form-control" id = "password2" name = "password" placeholder = "Nhập lại password" required>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-12">
+                <a href="{% url 'dsAdmin' %}" class="btn btn-secondary">Hủy</a>
+                <button class="btn btn-primary" onclick="addAdmin()" type="submit" >
+                <i class="fas fa-save"></i>
+                Thêm
+                </button>
+            </div>
+            </form>
+        </div>
+        </div>
+         {% else %}
+        <div class="alert alert-danger">
+            <strong>Bạn không có quyền truy cập</strong>
+        </div>
+        {% endif %}
+        <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+        <div class="modal fade" id="modal-them" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm lớp học</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id='thongBao'></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+        </div>
+    <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    function addAdmin(){
+        var payload = new FormData();
+        payload.append('_token', $('#csrf').val());
+        payload.append('username', document.getElementById('username').value);
+        payload.append('email', $('#email').val());
+        payload.append('password', $('#password').val());
+        payload.append('password2', $('#password2').val());
+        payload.append('csrfmiddlewaretoken', $('#csrf').val());
+        $.ajax({
+            url: '/addAdmin/',
+            type: 'POST',
+            data: payload,
+            contentType: false,
+            processData: false,
+            success: function(data){
+                if(data.success==true) {
+                    $('#thongBao').html('<div class="alert alert-success">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                    setTimeout(function(){
+                        window.location.href = "/dsAdmin/";
+                    }, 2000);
+                }
+                else {
+                    $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
+                    $('#modal-them').modal('show');
+                }
+            }
+        });
+    }
+
+
+</script>
+{% endblock content %}

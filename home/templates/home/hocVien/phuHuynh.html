@@ -1,0 +1,49 @@
+{% extends "home/hocVien/baseHV.html" %}
+{% block title %}
+
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Thông tin Phụ Huynh</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Mã Phụ Huynh</th>
+                                        <th>Tên Phụ Huynh</th>
+                                        <th>Giới Tính</th>
+                                        <th>Ngày Sinh</th>
+                                        <th>Email</th>
+                                        <th>Số Zalo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item  in phuHuynhs %}
+                                    <tr>
+                                        <td>
+                                        <a class="nav-link active" href="/hocPhi/{{item.maPH}}/">
+                                        {{ item.maPH }}
+                                        </a>
+                                        </td>
+                                        <td>{{ item.tenPH }}</td>
+                                        <td>{{ item.gioiTinh }}</td>
+                                        <td>{{ item.ngaySinh }}</td>
+                                        <td>{{ item.Email }}</td>
+                                        <td>{{ item.soZalo }}</td>
+                                    </tr>
+                                    {% endfor %}  
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
