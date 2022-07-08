@@ -207,7 +207,7 @@
       </div>
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+            <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -224,6 +224,14 @@
                 <a href="{% url 'thongKe' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thống kê</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'thongKeLopHoc' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Thống kê lớp học</p>
                 </a>
               </li>
             </ul>
@@ -244,7 +252,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{%url 'addKhoaHoc' %}" class="nav-link">
+                <a href="{% url 'addKhoaHoc' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tạo Mới</p>
                 </a>

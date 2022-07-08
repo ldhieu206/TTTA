@@ -207,7 +207,7 @@
       </div>
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+            <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -224,6 +224,14 @@
                 <a href="{% url 'thongKe' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Thống kê</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'thongKeLopHoc' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Thống kê lớp học</p>
                 </a>
               </li>
             </ul>
@@ -244,7 +252,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/khoaHoc/project-add.html" class="nav-link">
+                <a href="{% url 'addKhoaHoc' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tạo Mới</p>
                 </a>
@@ -351,14 +359,6 @@
           </li>
           </li>
           <li class="nav-header">EXAMPLES</li>
-          <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>
-                Thời khóa biểu
-              </p>
-            </a>
-          </li>
           <li class="nav-item">
             <a href="{% url 'logoutAdmin' %}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
@@ -576,6 +576,7 @@
                         {% endfor %}
                     </table>
                     </div>
+                <button type="submit" class="btn btn-primary float-right" onclick="quay_lai_trang_truoc()">Quay lại</button>
                   </div>
             </div>
             <!-- /.card-body -->
@@ -690,6 +691,10 @@ a.innerHTML = numberWithCommas(a.innerHTML) + ' VNĐ';
 
 let b = document.getElementById('tongTien')
 b.innerHTML = numberWithCommas(b.innerHTML) + ' VNĐ';
+
+function quay_lai_trang_truoc() {
+    window.history.back();
+}
 </script>
 <!-- ./wrapper -->
 
