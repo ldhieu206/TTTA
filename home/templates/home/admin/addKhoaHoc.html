@@ -117,14 +117,14 @@
             processData: false,
             success: function(data) {
                 if(data.success == true){
-                    $('#thongBao').html(data.message);
+                    $('#thongBao').hhtml('<div class="alert alert-success">'+data.message+'</div>');
                     $('#modal-them').modal('show');
                     setTimeout(function(){
                         $('#modal-them').modal('hide');
                         window.location.href = '/dsKhoaHoc/';
                     }, 2000);
                 }else{
-                    $('#thongBao').html(data.message);
+                    $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
                     $('#modal-them').modal('show');
                     setTimeout(function(){
                         $('#modal-them').modal('hide');

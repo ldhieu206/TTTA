@@ -18,10 +18,10 @@
                 {% csrf_token %}
                 <div class="row align-items-start">
                   <div class="col">
-                    <label for="">Chọn khoảng ngày cần lọc</label>
+                    <label for="">Chọn lớp cần thống kê</label>
                   </div>
                   <div class="col">
-                    <select name="maLop" id="ngay" class="form-control">
+                    <select name="maLop" id="ngay" class="form-control" required>
                       <option value="">Chọn lớp</option>
                       {% for lop in dsLopHoc %}
                         <option value="{{lop.maLop}}">{{lop.tenLop}}({{lop.maLop}})</option>

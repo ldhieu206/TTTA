@@ -41,25 +41,21 @@
               <thead>
                   <tr>
                     <th style="width: 10px">#</th>
-                    <th>Mã GV</th>
                     <th>Tên GV</th>
                     <th>Giới tính</th>
                     <th>Ngày sinh</th>
                     <th>Số điện thoại</th>
                     <th>Email</th>
-                    <th>Lương ngày</th>
               </thead>
               <tbody>
                 {% for item in dsGiaoViens %}
                   <tr>
                       <td></td>
-                      <td>{{item.maGV}}</td>
                     <td>{{item.tenGV}}</td>
                     <td>{{item.gioiTinh}}</td>
-                    <td>{{item.ngaySinh}}</td>
+                    <td>{{item.ngaySinh|date:"d-m-Y" }}</td>
                     <td>{{item.sdt}}</td>
                     <td>{{item.email}}</td>
-                    <td class="luongNgay">{{item.luongNgay}} </td>
                   </tr>
                 {% endfor %}
               </tbody>

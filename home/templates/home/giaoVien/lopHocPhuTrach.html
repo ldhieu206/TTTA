@@ -1,0 +1,28 @@
+{% extends "home/giaoVien/baseGV.html" %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Thông Tin Các Lớp Học Giáo Viên Phụ Trách</h1>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Mã Lớp</th>
+            <th>Tên Lớp</th>
+            <th>Số Lượng Học Viên</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in lopHocs %}
+          <tr>
+            <td>{{ item.maLop }}</td>
+            <td>{{ item.tenLop }}</td>
+            <td>{{ item.soLuongHocVien }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

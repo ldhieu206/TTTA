@@ -227,14 +227,6 @@
                 </a>
               </li>
             </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'thongKeLopHoc' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Thống kê lớp học</p>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -252,7 +244,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'addKhoaHoc' %}" class="nav-link">
+                <a href="pages/khoaHoc/project-add.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tạo Mới</p>
                 </a>
@@ -338,19 +330,19 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
-                Admin
+                Phụ Huynh
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{% url 'dsAdmin' %}" class="nav-link">
+                <a href="{% url 'dsPhuHuynh' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Danh sách</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'addAdmin' %}" class="nav-link">
+                <a href="{% url 'addPhuHuynh' %}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tạo Mới</p>
                 </a>
@@ -359,6 +351,14 @@
           </li>
           </li>
           <li class="nav-header">EXAMPLES</li>
+          <li class="nav-item">
+            <a href="pages/calendar.html" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Thời khóa biểu
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="{% url 'logoutAdmin' %}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
@@ -379,7 +379,7 @@
         <div class="col-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Sửa Giáo Viên</h3>
+              <h3 class="card-title">Sửa Học Viên</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -388,44 +388,40 @@
               </div>
             </div>
             <div class="card-body">
-            <form onsubmit="return false">
             {% csrf_token %}
             <input id="csrf" style="display: none" value="{{ csrf_token }}">
               <div class="form-group">
-                <label for="inputName">Mã giáo viên</label>
-                <input type="text" id="maGV" class="form-control" required value="{{giaoVien.maGV}}" placeholder="">
-              </div>
-              <div class="form-group">
-                <label for="tenGV">Tên giáo Viên</label>
-                <input type="text" id="tenGV" class="form-control" required value="{{giaoVien.tenGV}}">
-              </div>
-              <div class="form-group">
+                <label for="maPH">Mã Phụ Huynh</label>
+                <input type="text" class="form-control" id="maPH" placeholder="Nhập mã phụ huynh" value="{{ phuHuynh.maPH }}">
+                </div>
+                <div class="form-group">
+                <label for="tenPH">Tên Phụ Huynh</label>
+                <input type="text" class="form-control" id="tenPH" placeholder="Nhập tên phụ huynh" value="{{ phuHuynh.tenPH }}">
+                </div>
+                <div class="form-group">
                 <label for="inputName">Giới Tính</label>
-                <select id="gioiTinh" class="form-select" aria-label="Default select example" value="{{giaoVien.gioiTinh}}">
+                <select id="gioiTinh" class="form-select" multiple aria-label="multiple select example" value="{{phuHuynh.gioiTinh}}">
                     <option value="Nam">Nam</option>
                     <option value="Nữ">Nữ</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="ngaySinh">Ngày Sinh</label>
-                <input type="date" id="ngaySinh" class="form-control" required value="{{giaoVien.ngaySinh|date:'Y-m-d'}}">
-              </div>
-              <div class="form-group">
-                <label for="sdt">Số điện thoại</label>
-                <input type="text" id="sdt" class="form-control" required value="{{giaoVien.sdt}}">
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" id="email" class="form-control" required value="{{giaoVien.email}}">
-              </div>
-              <div class="form-group">
-                <label for="luongNgay">Lương theo ngày </label>
-                <input type="text" id="luongNgay" class="form-control" required value="{{giaoVien.luongNgay}}">
+                <input type="date" id="ngaySinh" class="form-control" value="{{phuHuynh.ngaySinh}}">
               </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="text" id="password" class="form-control" required value="{{giaoVien.password}}">
+                <label for="sdt1">Số Điện Thoại</label>
+                <input type="text" class="form-control" id="sdt1" placeholder="Nhập số điện thoại" value="{{ phuHuynh.sdt1 }}">
                 </div>
+                <div class="form-group">
+                <label for="soZalo">Số Điện Thoại</label>
+                <input type="text" class="form-control" id="soZalo" placeholder="Nhập số điện thoại" value="{{ phuHuynh.soZalo }}">
+                </div>
+                <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" placeholder="Nhập email" value="{{ phuHuynh.email }}">
+                </div>
+
             </div>
             <!-- /.card-body -->
           </div>
@@ -433,88 +429,41 @@
         </div>
       <div class="row">
         <div class="col-12">
-          <a href="{% url 'dsGiaoVienAdmin' %}" class="btn btn-secondary">Hủy</a>
-          <button onclick="editGiaoVien('{{item.maGV }}')" type="submit" value="Save Changes" class="btn btn-success float-right">
-          <button class="btn btn-primary" onclick="editGiaoVien('{{giaoVien.maGV }}')" type="submit" >
+          <a href="#" class="btn btn-secondary">Cancel</a>
+          <button class="btn btn-primary" onclick="editPhuHuynh('{{phuHuynh.maPH }}')" type="submit" >
             <i class="fas fa-save"></i>
-            Lưu
+            Save Changes
             </button>
         </div>
       </div>
-      </form>
-      </div>
-      <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-  </div>
-      <div class="modal fade" id="modal-them" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Thêm lớp học</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p id='thongBao'></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-        </div>
-  <!-- /.col -->
-</div>
-<!-- /.row -->
-</section>
-<!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
       <script>
-        function editGiaoVien(maHV){
+        function editPhuHuynh(maPH) {
             var payload = new FormData();
-            payload.append('maGV', document.getElementById('maGV').value);
-            payload.append('tenGV', $('#tenGV').val());
-            payload.append('gioiTinh', $('#gioiTinh').val());
-            payload.append('ngaySinh', $('#ngaySinh').val());
-            payload.append('sdt', $('#sdt').val());
-            payload.append('email', $('#email').val());
-            payload.append('diaChi', $('#diaChi').val());
-            payload.append('password', $('#password').val());
-            payload.append('luongNgay', $('#luongNgay').val());
+            
             payload.append('_token', $('#csrf').val());
             payload.append('csrfmiddlewaretoken', $('#csrf').val());
+            payload.append('maPH', $('#maPH').val());
+            payload.append('tenPH', $('#tenPH').val());
+            payload.append('gioiTinh', $('#gioiTinh').val());
+            payload.append('ngaySinh', $('#ngaySinh').val());
+            payload.append('sdt1', $('#sdt1').val());
+            payload.append('soZalo', $('#soZalo').val());
+            payload.append('email', $('#email').val());
             $.ajax({
-                url: '/editGiaoVien/{{ giaoVien.maGV}}/',
+                url: '/editPhuHuynh/{{ phuHuynh.maPH }}/',
                 type: 'POST',
                 data: payload,
                 contentType: false,
                 processData: false,
                 success: function(data){
-                  if(data.success==true){
-                    $('#thongBao').html('<div class="alert alert-success">'+data.message+'</div>');
-                    $('#modal-them').modal('show');
-                    setTimeout(function(){
-                      $('#modal-them').modal('hide');
-                      window.location.href = '{% url 'dsGiaoVienAdmin' %}';
-                    }, 2000);
-                  }
-                  else{
-                    $('#thongBao').html('<div class="alert alert-danger">'+data.message+'</div>');
-                    $('#modal-them').modal('show');
-                    setTimeout(function(){
-                      $('#modal-them').modal('hide');
-                    }, 2000);
-                  }
+                    alert("Sửa thành công!");
+                    window.location.href = '{% url 'homeAdmin' %}';
                 }
             });
-
         }
+
       </script>
     </section>
     <!-- /.content -->

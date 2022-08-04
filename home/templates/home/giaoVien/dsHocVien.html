@@ -65,7 +65,7 @@
                         <td>{{ item.email }}</td>
                         <td>{{ item.phone }}</td>
                         <td>{{ item.diaChi }}</td>
-                        <td>{{ item.ngaySinh }}</td>
+                        <td>{{ item.ngaySinh|date:"d-m-Y" }}</td>
                       <td class="project-actions text-right">
                           <a class="btn btn-primary btn-sm" href="/hienThiThongTinPhuHuynh/{{ item.maHV}}">
                               <i class="fas fa-folder">

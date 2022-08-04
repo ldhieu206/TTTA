@@ -1,0 +1,33 @@
+{% extends "home/giaoVien/indexGV.html" %} 
+{% block title %} {% endblock title%} 
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Thông Tin Lương Giáo Viên</h1>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Mã Giáo Viên</th>
+            <th>Ngày</th>
+            <th>Số Tiền Nhận</th>
+            <th>Ghi Chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in luongGVs %}
+          <tr>
+            <td>{{ item.giaoVien_id }}</td>
+            <td>{{ item.ngay }}</td>
+            <td>{{ item.soTienNhan }}</td>
+            <td>{{ item.ghiChu }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+    
+    {% endblock content %}

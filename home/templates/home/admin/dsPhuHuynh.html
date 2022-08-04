@@ -1,0 +1,46 @@
+{% extends "home/admin/baseAdmin.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                    Danh Sách Phụ Huynh
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-condensed table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã Phụ Huynh</th>
+                                            <th>Mã Học Viên</th>
+                                            <th>Tên Phụ Huynh</th>
+                                            <th>Số Điện Thoại</th>
+                                            <th>Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in dsPhuHuynhs %}
+                                        <tr>
+                                            <td>{{ item.maPH }}</td>
+                                            <td>{{ item.hocVien_id }}</td>
+                                            <td>{{ item.sdt1 }}</td>
+                                            <td>{{ item.soZalo }}</td>
+                                            <td>{{ item.email }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

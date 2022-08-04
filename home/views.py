@@ -1149,7 +1149,7 @@ def editHV(request):
             "message": "Sửa thông tin thành công",
         })
     return render(request, 'home/hocVien/editHV.html',data)
-@login_required
+    
 def editGV(request):
     try:
         maGV = request.session['giaoVien']
