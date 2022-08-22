@@ -416,6 +416,25 @@
                 <input type="date" class="form-control" id="ngay" name="ngay">
                 <button type="submit" onclick="DDHVtheoNgay()" class="btn btn-primary">Tìm</button>
               </div>
+              <div class="search-form">
+                <select class="form-control" id="lop" name="lop">
+                  <option value="">{{gv.tenGV}}</option>
+                  {% for gv in dsgv %}
+                    <option id="giaoVien_id" value="{{gv.maGV}}">{{gv.tenGV}}</option>
+                  {% endfor %}
+                </select>
+                  <button type="submit" onclick="diemDanhGV()" class="btn-dd-gv btn btn-primary" id="btn">Điểm danh giáo viên</button>
+                {% for x in data2 %}
+                  {% if x == 1 %}
+                    <script>
+                        document.getElementsByClassName("btn-dd-gv")[{{forloop.counter0}}].classList.add("btn-success");
+                        document.getElementsByClassName("btn-dd-gv")[{{forloop.counter0}}].classList.remove("btn-primary");
+                        document.getElementsByClassName("btn-dd-gv")[{{forloop.counter0}}].innerHTML = "Đã Điểm Danh";
+                        document.getElementsByClassName("btn-dd-gv")[{{forloop.counter0}}].disabled = true;
+                  </script>
+                  {% endif %}
+                {% endfor %}
+              </div>
                 <div class="card-body p-0">
                 {% csrf_token %}
                 <table class="table table-striped projects">
@@ -620,6 +639,40 @@
         });
 
     }
+    
+    function diemDanhGV() {
+        const payload = new FormData();
+        payload.append('giaoVien_id', $('#giaoVien_id').val());
+        payload.append('lopHoc_id', document.getElementById('lopHoc_id').value);
+        payload.append(
+        "csrfmiddlewaretoken",
+        $('input[name=csrfmiddlewaretoken]').val());
+
+        $.ajax({
+            url: "/diemDanhGV/",
+            type: 'POST',
+            data : payload,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                console.log(data.success);
+                if (data.success) {
+                    document.getElementById('btn').innerHTML = 'Đã Điểm Danh';
+                    document.getElementById('btn').classList.add('btn-success');
+                    document.getElementById('btn').classList.remove('btn-primary');
+                    document.getElementById('btn').disabled = true;
+                } else {
+                  console.log(data.message);
+                  alert(data.message);
+                }
+            },
+            error: function(data) {
+                alert(data.message);
+            }
+        });
+
+    }
+
 
     function export_excel(){
       var payload = new FormData();

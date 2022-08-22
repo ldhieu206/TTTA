@@ -72,5 +72,6 @@ urlpatterns = [
     path('thongTinHocPhi/', views.thongTinHocPhi, name='thongTinHocPhi'),
     path('thanhToanLuong/', views.thanhToanLuong, name='thanhToanLuong'),
     path('tklh/', views.tklh, name='tklh'),
+    path('diemDanhGV/', views.diemDanhGV, name='diemDanhGV'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

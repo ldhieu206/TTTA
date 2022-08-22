@@ -1054,11 +1054,17 @@ def lopHocGV(request,maGV):
 def hocVienLopAdmin(request,maLop):
 
     from datetime import datetime 
+
+    lopHoc = LopHoc.objects.get(maLop=maLop)
+    gv = GiaoVien.objects.get(maGV=lopHoc.giaoVien_id)
+
     data={
         'dsHocVien':HocVien_LopHoc.objects.filter(lopHoc_id=maLop),
         'dshv':[x.hocVien_id for x in HocVien_LopHoc.objects.filter(lopHoc_id=maLop)],
         'list_lophoc':LopHoc.objects.all(),
+        'gv':gv,
         'lopHoc':LopHoc.objects.get(maLop=maLop),
+        'dsgv':GiaoVien.objects.all(),
         'data': [
             1 if 
             HOCVIEN_buoihoc.objects.filter(
@@ -1068,6 +1074,15 @@ def hocVienLopAdmin(request,maLop):
             ).exists() 
             else 0 
             for hv_lh in HocVien_LopHoc.objects.filter(lopHoc_id=maLop)
+        ],
+        'data2': [
+            1 if
+            GIAOVIEN_buoihoc.objects.filter(
+                lopHoc_id=maLop,
+                giaoVien_id=gv.maGV,
+                ngay=datetime.now().date()
+            ).exists()
+            else 0
         ],
     }
     return render(request, 'home/admin/hocVienLop.html',data)
@@ -1407,3 +1422,22 @@ def error_500(request):
     })
 
 # 404 Page Not Found
+def diemDanhGV(request):
+    if request.method == "POST":
+        giaoVien_id = request.POST['giaoVien_id']
+        lopHoc_id = request.POST['lopHoc_id']
+        lophoc = LopHoc.objects.get(maLop=lopHoc_id)
+        giaoVien = GiaoVien.objects.get(maGV=giaoVien_id)
+        ngay = datetime.now()
+        try:
+            GIAOVIEN_buoihoc.objects.get(maGV=giaoVien,ngay=ngay,lopHoc_id=lopHoc_id)
+            return JsonResponse({
+                "success": False,
+                "message": "Giao viên đã điểm danh",
+            })
+        except:
+            GIAOVIEN_buoihoc.objects.create(giaoVien_id=giaoVien,ngay=ngay,lopHoc_id=lophoc,diemDanhGV=True)
+            return JsonResponse({
+                "success": True,
+                "message": "Điểm danh thành công",
+            })
